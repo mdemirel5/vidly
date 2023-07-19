@@ -1,7 +1,8 @@
 const express = require("express");
-const app = express();
+const routes = express();
+const Joi = require("joi");
 
-app.use(express.json());
+routes.use(express.json);
 
 const genres = {
   id: 1,
@@ -33,3 +34,12 @@ app.post("/api/genres", (req, res) => {
   genres.push(genre);
   req.send(genre);
 });
+
+function validateGenre(genre) {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  return Joi.validate(genre, schema);
+}
+modules.export = routes;
